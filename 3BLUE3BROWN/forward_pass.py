@@ -29,16 +29,28 @@ def forward_propagation(a0):
     a3 = sigmoid(z3)
     return a0, a1, a2, a3
 
+def one_hot(number):
+    y = np.zeros((10,1))
+    y[number] = 1.0
+    return y
 
+def compute_cost(a3,y_true):
+    cost = np.sum(np.square(a3 - y_true))
+    return cost
 
 #随机生成图片a0
 if __name__ == "__main__":
-    picture = np.random.randn(layer0_size,1)
+    picture = np.random.rand(layer0_size,1)
     a0, a1, a2, a3 = forward_propagation(picture)
 
+    number = 3
+    y_true = one_hot(number)
+    current_cost = compute_cost(a3,y_true)
     print("系统的最终输出 (10个数字的激活值):")
-    print(a3)
+    print(f"\n {a3.flatten()}")
     print(f"\n当前网络瞎猜这个数字是: {np.argmax(a3)}")
+    print(f"\n这个数字应该是{number} \n {y_true.flatten()}")
+    print(f"\ncost是:{current_cost:.4f}")
 
 
 
